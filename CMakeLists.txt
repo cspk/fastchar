@@ -5,4 +5,10 @@ set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 file(GLOB SOURCES "${SRC_DIR}/*.c")
 set(CMAKE_C_FLAGS "-std=c11 -Wall -Wextra -pedantic")
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK3 REQUIRED "gtk+-3.0")
+include_directories(${GTK3_INCLUDE_DIRS})
+link_directories(${GTK3_LIBRARY_DIRS})
+
 add_executable(${PROJECT_NAME} ${SOURCES})
+target_link_libraries(${PROJECT_NAME} ${GTK3_LIBRARIES})
