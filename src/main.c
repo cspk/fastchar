@@ -13,6 +13,14 @@ int main(int argc, char *argv[]) {
 	}
 	gchar *cfg_path = g_strjoin("/", user_home, CFG_FILENAME, NULL);
 
+	size_t cfg_sz;
+	void *cfg = cfg_load(cfg_path, &cfg_sz);
+	if (!cfg) {
+		fprintf(stderr, "Error loading config file!\n");
+		return 1;
+	}
+	g_free(cfg_path);
+
 	GtkApplication *app = gtk_application_new("org.gtk."PROJECT_NAME,
 		G_APPLICATION_FLAGS_NONE);
 	g_signal_connect(app, "activate", G_CALLBACK(ui_init), NULL);
