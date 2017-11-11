@@ -6,12 +6,11 @@
 #include "ui.h"
 
 int main(int argc, char *argv[]) {
-	const char *user_home = getenv("HOME");
-	if (!user_home) {
-		fprintf(stderr, "Could not get user HOME!\n");
+	char *cfg_path = cfg_get_path();
+	if (!cfg_path) {
+		fprintf(stderr, "Could not locate config file!\n");
 		return 1;
 	}
-	gchar *cfg_path = g_strjoin("/", user_home, CFG_FILENAME, NULL);
 
 	size_t cfg_sz;
 	void *cfg = cfg_load(cfg_path, &cfg_sz);

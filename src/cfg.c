@@ -1,9 +1,19 @@
+#include <stdlib.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
 
 #include "cfg.h"
 #include "debug.h"
+
+char* cfg_get_path(void) {
+	const char *user_home = getenv("HOME");
+	if (!user_home) {
+		debug("Could not get user HOME!\n");
+		return NULL;
+	}
+	return g_strjoin("/", user_home, CFG_FILENAME, NULL);
+}
 
 void* cfg_load(const char *filename, size_t *cfg_sz) {
 	int fd = open(filename, O_RDONLY);
