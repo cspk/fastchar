@@ -2,6 +2,8 @@
 
 #include "ui.h"
 
+static void menu_on_hide(GtkWidget *menu, gpointer data);
+
 void ui_init(GtkApplication *app, gpointer data) {
 	char *chars = data;
 	size_t char_cnt = g_utf8_strlen(data, -1);
@@ -17,6 +19,16 @@ void ui_init(GtkApplication *app, gpointer data) {
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitems[i]);
 	}
 
+	g_signal_connect(menu, "hide", G_CALLBACK(menu_on_hide), app);
+
 	gtk_widget_show_all(GTK_WIDGET(menu));
 	gtk_menu_popup_at_widget(GTK_MENU(menu), window, 0, 0, NULL);
+}
+
+
+
+static void menu_on_hide(GtkWidget *menu, gpointer data) {
+	(void)menu;
+
+	g_application_quit(G_APPLICATION(data));
 }
