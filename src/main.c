@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	size_t cfg_sz;
-	void *cfg = cfg_load(cfg_path, &cfg_sz);
+	char *cfg = cfg_load(cfg_path, &cfg_sz);
 	if (!cfg) {
 		fprintf(stderr, "Error loading config file!\n");
 		return 1;

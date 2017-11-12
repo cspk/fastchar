@@ -13,7 +13,7 @@ char* cfg_get_path(void) {
 	return g_strjoin("/", user_home, CFG_FILENAME, NULL);
 }
 
-void* cfg_load(const char *filename, size_t *cfg_sz) {
+char* cfg_load(const char *filename, size_t *cfg_sz) {
 	GFile *file = g_file_new_for_path(filename);
 	if (!g_file_query_exists(file, NULL)) {
 		debug("Config file not found\n");
