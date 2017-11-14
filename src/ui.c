@@ -3,6 +3,7 @@
 #include "ui.h"
 
 static void menu_on_hide(GtkWidget *menu, gpointer data);
+static void menuitem_on_activate(GtkWidget *menuitem, gpointer data);
 
 void ui_init(GtkApplication *app, gpointer data) {
 	char *chars = data;
@@ -17,6 +18,8 @@ void ui_init(GtkApplication *app, gpointer data) {
 		menuitems[i] = gtk_menu_item_new_with_label(label);
 		g_free(label);
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitems[i]);
+		g_signal_connect(menuitems[i], "activate",
+			G_CALLBACK(menuitem_on_activate), NULL);
 	}
 
 	g_signal_connect(menu, "hide", G_CALLBACK(menu_on_hide), app);
@@ -31,4 +34,9 @@ static void menu_on_hide(GtkWidget *menu, gpointer data) {
 	(void)menu;
 
 	g_application_quit(G_APPLICATION(data));
+}
+
+static void menuitem_on_activate(GtkWidget *menuitem, gpointer data) {
+	(void)menuitem;
+	(void)data;
 }
