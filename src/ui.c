@@ -5,7 +5,7 @@
 static void menu_on_hide(GtkWidget *menu, gpointer data);
 static void menuitem_on_activate(GtkWidget *menuitem, gpointer data);
 
-void ui_init(char *cfg, size_t sz) {
+void ui_init(char *cfg) {
 	char *chars = cfg;
 	size_t char_cnt = g_utf8_strlen(chars, -1);
 

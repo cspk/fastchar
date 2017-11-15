@@ -7,6 +7,6 @@
 #define CFG_FILENAME "." PROJECT_NAME
 
 char* cfg_get_path(void);
-char* cfg_load(const char *filename, size_t *cfg_sz);
+char* cfg_load(const char *filename);
 
 #endif /* CFG_H */

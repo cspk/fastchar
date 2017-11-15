@@ -26,15 +26,14 @@ static int g_main(void) {
 		return 1;
 	}
 
-	size_t cfg_sz;
-	char *cfg = cfg_load(cfg_path, &cfg_sz);
+	char *cfg = cfg_load(cfg_path);
 	if (!cfg) {
 		fprintf(stderr, "Error loading config file!\n");
 		return 1;
 	}
 	g_free(cfg_path);
 
-	ui_init(cfg, sz);
+	ui_init(cfg);
 
 	return 0;
 }
