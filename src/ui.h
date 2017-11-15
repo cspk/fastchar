@@ -3,6 +3,6 @@
 
 #include <gtk/gtk.h>
 
-void ui_init(GtkApplication *app, gpointer data);
+void ui_init(char *cfg, size_t sz);
 
 #endif /* UI_H */

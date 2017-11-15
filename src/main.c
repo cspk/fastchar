@@ -5,7 +5,21 @@
 #include "cfg.h"
 #include "ui.h"
 
+static int g_main(void);
+
 int main(int argc, char *argv[]) {
+	GtkApplication *app = gtk_application_new("org.gtk."PROJECT_NAME,
+		G_APPLICATION_FLAGS_NONE);
+	g_signal_connect(app, "activate", G_CALLBACK(g_main), NULL);
+	int status = g_application_run(G_APPLICATION(app), argc, argv);
+
+	g_object_unref(app);
+	return status;
+}
+
+
+
+static int g_main(void) {
 	char *cfg_path = cfg_get_path();
 	if (!cfg_path) {
 		fprintf(stderr, "Could not locate config file!\n");
@@ -20,11 +34,7 @@ int main(int argc, char *argv[]) {
 	}
 	g_free(cfg_path);
 
-	GtkApplication *app = gtk_application_new("org.gtk."PROJECT_NAME,
-		G_APPLICATION_FLAGS_NONE);
-	g_signal_connect(app, "activate", G_CALLBACK(ui_init), cfg);
-	int status = g_application_run(G_APPLICATION(app), argc, argv);
+	ui_init(cfg, sz);
 
-	g_object_unref(app);
-	return status;
+	return 0;
 }

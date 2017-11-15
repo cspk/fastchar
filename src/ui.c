@@ -5,10 +5,11 @@
 static void menu_on_hide(GtkWidget *menu, gpointer data);
 static void menuitem_on_activate(GtkWidget *menuitem, gpointer data);
 
-void ui_init(GtkApplication *app, gpointer data) {
-	char *chars = data;
-	size_t char_cnt = g_utf8_strlen(data, -1);
+void ui_init(char *cfg, size_t sz) {
+	char *chars = cfg;
+	size_t char_cnt = g_utf8_strlen(chars, -1);
 
+	GtkApplication *app = (GtkApplication*)g_application_get_default();
 	GtkWidget *window = gtk_application_window_new(app);
 	GtkWidget *menu = gtk_menu_new();
 
