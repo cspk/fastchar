@@ -41,6 +41,8 @@ static void menuitem_on_activate(GtkWidget *menuitem, gpointer data) {
 	(void)data;
 
 	const char *label = gtk_menu_item_get_label(GTK_MENU_ITEM(menuitem));
-	GtkClipboard *cb = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
-	gtk_clipboard_set_text(cb, label, -1);
+	GtkClipboard *primary = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
+	GtkClipboard *clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+	gtk_clipboard_set_text(primary, label, -1);
+	gtk_clipboard_set_text(clipboard, label, -1);
 }
