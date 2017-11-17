@@ -1,6 +1,7 @@
 #include <stddef.h>
 
 #include "ui.h"
+#include "x11.h"
 
 static void menu_on_hide(GtkWidget *menu, gpointer data);
 static void menuitem_on_activate(GtkWidget *menuitem, gpointer data);
@@ -34,6 +35,7 @@ void ui_init(char *cfg) {
 static void menu_on_hide(GtkWidget *menu, gpointer data) {
 	(void)menu;
 
+	x11_simulate_paste();
 	g_application_quit(G_APPLICATION(data));
 }
 
