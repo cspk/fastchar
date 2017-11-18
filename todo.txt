@@ -1,0 +1,5 @@
+* restore previous selection contents (both PRIMARY and CLIPBOARD)
+* get rid of pasting delay if possible (presumably application quits earlier
+  than pasting from PRIMARY occurs, resulting in PRIMARY clearing. Pasting from
+  CLIPBOARD works ok)
+* show UI close to text input field, not cursor (if possible)
