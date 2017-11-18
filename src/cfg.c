@@ -34,7 +34,7 @@ char* cfg_load(const char *filename) {
 
 	gsize sz;
 	char *data = g_data_input_stream_read_line_utf8(data_s, &sz, NULL, NULL);
-	if (!data) {
+	if (!data || sz == 0) {
 		debug("Can't read config file\n");
 		g_input_stream_close(G_INPUT_STREAM(data_s), NULL, NULL);
 		g_input_stream_close(G_INPUT_STREAM(s), NULL, NULL);
