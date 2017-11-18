@@ -3,8 +3,8 @@
 #include "ui.h"
 #include "x11.h"
 
-static void menu_on_hide(GtkWidget *menu, gpointer data);
-static void menuitem_on_activate(GtkWidget *menuitem, gpointer data);
+static void menu_on_hide(GtkApplication *app);
+static void menu_on_activate(GtkWidget *menu);
 
 void ui_init(char *cfg) {
 	char *chars = cfg;
@@ -20,11 +20,11 @@ void ui_init(char *cfg) {
 		menuitems[i] = gtk_menu_item_new_with_label(label);
 		g_free(label);
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitems[i]);
-		g_signal_connect(menuitems[i], "activate",
-			G_CALLBACK(menuitem_on_activate), NULL);
 	}
 
-	g_signal_connect(menu, "hide", G_CALLBACK(menu_on_hide), app);
+
+	g_signal_connect_swapped(menu, "hide", G_CALLBACK(menu_on_hide), app);
+	g_signal_connect(menu, "activate-current", G_CALLBACK(menu_on_activate), NULL);
 
 	gtk_widget_show_all(GTK_WIDGET(menu));
 	gtk_menu_popup_at_widget(GTK_MENU(menu), window, 0, 0, NULL);
@@ -32,17 +32,15 @@ void ui_init(char *cfg) {
 
 
 
-static void menu_on_hide(GtkWidget *menu, gpointer data) {
-	(void)menu;
-
+static void menu_on_hide(GtkApplication *app) {
 	x11_simulate_paste();
-	g_application_quit(G_APPLICATION(data));
+	g_application_quit(G_APPLICATION(app));
 }
 
-static void menuitem_on_activate(GtkWidget *menuitem, gpointer data) {
-	(void)data;
+static void menu_on_activate(GtkWidget *menu) {
+	GtkWidget *item = gtk_menu_shell_get_selected_item(GTK_MENU_SHELL(menu));
+	const char *label = gtk_menu_item_get_label(GTK_MENU_ITEM(item));
 
-	const char *label = gtk_menu_item_get_label(GTK_MENU_ITEM(menuitem));
 	GtkClipboard *primary = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
 	GtkClipboard *clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 	gtk_clipboard_set_text(primary, label, -1);
