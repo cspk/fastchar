@@ -29,7 +29,8 @@ char* cfg_load(const char *filename) {
 	}
 
 	GDataInputStream *data_s = g_data_input_stream_new(G_INPUT_STREAM(s));
-	g_data_input_stream_set_byte_order(data_s, G_DATA_STREAM_BYTE_ORDER_BIG_ENDIAN);
+	GDataStreamByteOrder byte_order = G_DATA_STREAM_BYTE_ORDER_BIG_ENDIAN;
+	g_data_input_stream_set_byte_order(data_s, byte_order);
 
 	gsize sz;
 	char *data = g_data_input_stream_read_line_utf8(data_s, &sz, NULL, NULL);

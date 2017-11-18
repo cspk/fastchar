@@ -8,8 +8,10 @@
 static int g_main(void);
 
 int main(int argc, char *argv[]) {
-	GtkApplication *app = gtk_application_new("org.gtk."PROJECT_NAME,
-		G_APPLICATION_FLAGS_NONE);
+	const char *app_name = "org.gtk." PROJECT_NAME;
+	GApplicationFlags app_flags = G_APPLICATION_FLAGS_NONE;
+	GtkApplication *app = gtk_application_new(app_name, app_flags);
+
 	g_signal_connect(app, "activate", G_CALLBACK(g_main), NULL);
 	int status = g_application_run(G_APPLICATION(app), argc, argv);
 
