@@ -1,17 +1,12 @@
 #include <X11/Xlib.h>
-#include <X11/extensions/XTest.h>
-#include <X11/keysym.h>
+#include <fakekey/fakekey.h>
 
-void x11_simulate_paste(void) {
+void x11_simulate_paste(const char *utf8_char) {
     Display *disp = XOpenDisplay(NULL);
 
-    KeyCode shift_code = XKeysymToKeycode(disp, XK_Shift_L);
-    KeyCode insert_code = XKeysymToKeycode(disp, XK_Insert);
-
-    XTestFakeKeyEvent(disp, shift_code, True, CurrentTime);
-    XTestFakeKeyEvent(disp, insert_code, True, CurrentTime);
-    XTestFakeKeyEvent(disp, insert_code, False, CurrentTime);
-    XTestFakeKeyEvent(disp, shift_code, False, CurrentTime);
+    FakeKey *fk = fakekey_init(disp);
+    fakekey_press(fk, (const unsigned char*)utf8_char, -1, 0);
+    fakekey_release(fk);
 
     XFlush(disp);
     XCloseDisplay(disp);

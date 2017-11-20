@@ -1,10 +1,9 @@
 #include <stddef.h>
-#include <stdbool.h>
 
 #include "ui.h"
 #include "x11.h"
 
-static bool char_selected = false;
+static const char *selected_char = NULL;
 
 static void menu_on_hide(GtkApplication *app);
 static void menu_on_activate(GtkWidget *menu);
@@ -36,8 +35,8 @@ void ui_init(char *cfg) {
 
 
 static void menu_on_hide(GtkApplication *app) {
-	if (char_selected) {
-		x11_simulate_paste();
+	if (selected_char) {
+		x11_simulate_paste(selected_char);
 		usleep(4000);
 	}
 
@@ -46,11 +45,5 @@ static void menu_on_hide(GtkApplication *app) {
 
 static void menu_on_activate(GtkWidget *menu) {
 	GtkWidget *item = gtk_menu_shell_get_selected_item(GTK_MENU_SHELL(menu));
-	const char *label = gtk_menu_item_get_label(GTK_MENU_ITEM(item));
-
-	GtkClipboard *primary = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
-	GtkClipboard *clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-	gtk_clipboard_set_text(primary, label, -1);
-	gtk_clipboard_set_text(clipboard, label, -1);
-	char_selected = true;
+	selected_char = gtk_menu_item_get_label(GTK_MENU_ITEM(item));
 }
