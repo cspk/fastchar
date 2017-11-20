@@ -13,3 +13,4 @@ link_directories(${MODULES_LIBRARY_DIRS})
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} ${MODULES_LIBRARIES})
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "bin")
