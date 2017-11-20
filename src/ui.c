@@ -8,8 +8,8 @@ static const char *selected_char = NULL;
 static void menu_on_hide(GtkApplication *app);
 static void menu_on_activate(GtkWidget *menu);
 
-void ui_init(char *cfg) {
-	char *chars = cfg;
+void ui_init(const char *cfg) {
+	const char *chars = cfg;
 	size_t char_cnt = g_utf8_strlen(chars, -1);
 
 	GtkApplication *app = (GtkApplication*)g_application_get_default();

@@ -3,6 +3,6 @@
 
 #include <gtk/gtk.h>
 
-void ui_init(char *cfg);
+void ui_init(const char *cfg);
 
 #endif /* UI_H */
