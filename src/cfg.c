@@ -2,12 +2,12 @@
 #include <gio/gio.h>
 
 #include "cfg.h"
-#include "debug.h"
+#include "dbg.h"
 
 char* cfg_get_path(void) {
 	const char *user_home = getenv("HOME");
 	if (!user_home) {
-		debug("Could not get user HOME!\n");
+		DBG("Could not get user HOME!\n");
 		return NULL;
 	}
 	return g_strjoin("/", user_home, CFG_FILENAME, NULL);
@@ -16,14 +16,14 @@ char* cfg_get_path(void) {
 char* cfg_load(const char *filename) {
 	GFile *file = g_file_new_for_path(filename);
 	if (!g_file_query_exists(file, NULL)) {
-		debug("Config file not found\n");
+		DBG("Config file not found\n");
 		g_object_unref(file);
 		return NULL;
 	}
 
 	GFileInputStream *s = g_file_read(file, NULL, NULL);
 	if (!s) {
-		debug("Can't open config file\n");
+		DBG("Can't open config file\n");
 		g_object_unref(file);
 		return NULL;
 	}
@@ -35,7 +35,7 @@ char* cfg_load(const char *filename) {
 	gsize sz;
 	char *data = g_data_input_stream_read_line_utf8(data_s, &sz, NULL, NULL);
 	if (!data || sz == 0) {
-		debug("Can't read config file\n");
+		DBG("Can't read config file\n");
 		g_input_stream_close(G_INPUT_STREAM(data_s), NULL, NULL);
 		g_input_stream_close(G_INPUT_STREAM(s), NULL, NULL);
 		g_object_unref(data_s);
