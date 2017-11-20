@@ -36,7 +36,7 @@ void ui_init(char *cfg) {
 
 static void menu_on_hide(GtkApplication *app) {
 	if (selected_char) {
-		x11_simulate_paste(selected_char);
+		x11_type_char(selected_char);
 	}
 
 	g_application_quit(G_APPLICATION(app));

@@ -1,7 +1,7 @@
 #include <X11/Xlib.h>
 #include <fakekey/fakekey.h>
 
-void x11_simulate_paste(const char *utf8_char) {
+void x11_type_char(const char *utf8_char) {
     Display *disp = XOpenDisplay(NULL);
 
     FakeKey *fk = fakekey_init(disp);
