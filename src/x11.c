@@ -8,6 +8,6 @@ void x11_type_char(const char *utf8_char) {
     fakekey_press(fk, (const unsigned char*)utf8_char, -1, 0);
     fakekey_release(fk);
 
-    XFlush(disp);
+    XSync(disp, False);
     XCloseDisplay(disp);
 }
