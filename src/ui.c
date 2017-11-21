@@ -30,6 +30,7 @@ void ui_init(const char *cfg) {
 
 	gtk_widget_show_all(GTK_WIDGET(menu));
 	gtk_menu_popup_at_widget(GTK_MENU(menu), window, 0, 0, NULL);
+	gtk_menu_shell_select_first(GTK_MENU_SHELL(menu), FALSE);
 }
 
 
