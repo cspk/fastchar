@@ -37,5 +37,6 @@ static int g_main(void) {
 
 	ui_init((const char*)cfg);
 
+	free(cfg);
 	return 0;
 }
