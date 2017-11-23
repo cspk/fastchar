@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.2)
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 file(GLOB SOURCES "${SRC_DIR}/*.c")
 set(CMAKE_C_FLAGS "-std=c11 -Wall -Wextra -pedantic")
+set(CMAKE_C_FLAGS_DEBUG "-O0 -g")
+set(CMAKE_C_FLAGS_RELEASE "-O2")
 add_definitions("-DPROJECT_NAME=\"${PROJECT_NAME}\"")
 
 find_package(PkgConfig REQUIRED)
