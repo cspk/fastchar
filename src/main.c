@@ -35,7 +35,7 @@ static int g_main(void) {
 	}
 	g_free(cfg_path);
 
-	ui_init((const char*)cfg);
+	ui_init(cfg);
 
 	free(cfg);
 	return 0;
