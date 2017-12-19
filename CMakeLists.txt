@@ -9,7 +9,7 @@ set(CMAKE_C_FLAGS_RELEASE "-O2")
 add_definitions("-DPROJECT_NAME=\"${PROJECT_NAME}\"")
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(MODULES REQUIRED "gtk+-3.0" "x11" "libfakekey")
+pkg_check_modules(MODULES REQUIRED "gtk+-3.0" "x11" "xtst")
 include_directories(${MODULES_INCLUDE_DIRS})
 link_directories(${MODULES_LIBRARY_DIRS})
 
