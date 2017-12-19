@@ -2,7 +2,7 @@
 `fastchar` is a small utility enabling you to type arbitrary symbols.
 
 # Compiling
-1. install `GTK+3`, `xlib` and `libfakekey`
+1. install `GTK+3`, `xlib` and `libxtst`
 2. run `cmake` and `make`
 
 # Installing
