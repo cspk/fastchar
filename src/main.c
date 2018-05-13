@@ -8,7 +8,7 @@
 static int g_main(void);
 
 int main(int argc, char *argv[]) {
-	const char *app_name = "org.gtk." PROJECT_NAME;
+	const char *app_name = "org.gtk.fastchar";
 	GApplicationFlags app_flags = G_APPLICATION_FLAGS_NONE;
 	GtkApplication *app = gtk_application_new(app_name, app_flags);
 
