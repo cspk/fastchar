@@ -9,6 +9,7 @@ static const char *selected_char = NULL;
 static void menu_on_hide(GtkApplication *app);
 static void menu_on_activate(GtkWidget *menu);
 static gboolean menu_key_event(GtkWidget *menu, GdkEvent *event, gpointer data);
+static gboolean menu_button_event(GtkWidget *menu, GdkEvent *event, gpointer data);
 
 static void menuitem_capitalize_label(GtkWidget *item, gpointer data);
 
@@ -37,6 +38,7 @@ void ui_init(const char *cfg) {
 	gtk_widget_set_events(menu, events);
 	g_signal_connect(menu, "key-press-event", G_CALLBACK(menu_key_event), NULL);
 	g_signal_connect(menu, "key-release-event", G_CALLBACK(menu_key_event), NULL);
+	g_signal_connect(menu, "button-release-event", G_CALLBACK(menu_button_event), NULL);
 
 	gtk_widget_show_all(GTK_WIDGET(menu));
 	gtk_menu_popup_at_widget(GTK_MENU(menu), window, 0, 0, NULL);
@@ -94,6 +96,21 @@ static gboolean menu_key_event(GtkWidget *menu, GdkEvent *event, gpointer data) 
 	}
 
 	return FALSE;
+}
+
+static gboolean menu_button_event(GtkWidget *menu, GdkEvent *event, gpointer data) {
+	(void)data;
+
+	const guint button_left = 1;
+
+	GdkEventButton *button_event = (GdkEventButton*)event;
+	if (button_event->button == button_left) {
+		g_signal_emit_by_name(menu, "activate-current");
+
+		return TRUE;
+	}
+
+	return TRUE;
 }
 
 static void menuitem_capitalize_label(GtkWidget *item, gpointer data) {
