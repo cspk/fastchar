@@ -32,7 +32,9 @@ void ui_init(const char *cfg) {
 	g_signal_connect_swapped(menu, "hide", G_CALLBACK(menu_on_hide), app);
 	g_signal_connect(menu, "activate-current", G_CALLBACK(menu_on_activate), NULL);
 
-	gtk_widget_set_events(menu, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
+	gint events = GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK |
+	              GDK_BUTTON_RELEASE_MASK;
+	gtk_widget_set_events(menu, events);
 	g_signal_connect(menu, "key-press-event", G_CALLBACK(menu_key_event), NULL);
 	g_signal_connect(menu, "key-release-event", G_CALLBACK(menu_key_event), NULL);
 
