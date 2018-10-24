@@ -6,4 +6,4 @@ gtk3 = dependency('gtk+-3.0')
 x11 = dependency('x11')
 xtst = dependency('xtst')
 
-executable('fastchar', src, dependencies: [gtk3, x11, xtst])
+executable('fastchar', src, dependencies: [gtk3, x11, xtst], install: true)
