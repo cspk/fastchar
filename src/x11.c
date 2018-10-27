@@ -25,7 +25,7 @@ void x11_type_char(const char *utf8_str) {
 
 	KeyCode char_kc = keysym_to_keycode(disp, char_ks);
 	if (!char_kc) {
-		fprintf(stderr, "No free keycodes left, aboting\n");
+		fprintf(stderr, "No free keycodes left, aborting\n");
 		exit(1);
 	}
 
