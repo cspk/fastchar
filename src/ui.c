@@ -74,8 +74,7 @@ static gboolean menu_key_event(GtkWidget *menu, GdkEvent *event, gpointer data) 
 		break;
 
 	case GDK_KEY_Return:
-		if ((key_event->type == GDK_KEY_PRESS) &&
-		    (key_event->state & GDK_SHIFT_MASK)) {
+		if (key_event->type == GDK_KEY_PRESS) {
 			g_signal_emit_by_name(menu, "activate-current");
 
 			return TRUE;
@@ -84,8 +83,7 @@ static gboolean menu_key_event(GtkWidget *menu, GdkEvent *event, gpointer data) 
 
 	case GDK_KEY_Up:
 	case GDK_KEY_Down:
-		if ((key_event->type == GDK_KEY_PRESS) &&
-		    (key_event->state & GDK_SHIFT_MASK)) {
+		if (key_event->type == GDK_KEY_PRESS) {
 			GtkMenuDirectionType dir = (key_event->keyval == GDK_KEY_Up) ?
 				GTK_MENU_DIR_PREV : GTK_MENU_DIR_NEXT;
 			g_signal_emit_by_name(menu, "move-current", dir);
