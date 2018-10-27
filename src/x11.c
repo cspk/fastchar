@@ -20,17 +20,6 @@ void x11_type_char(const char *utf8_str) {
 	Display *disp = XOpenDisplay(NULL);
 	assert(disp);
 
-	/*
-		Workaround: we need to release Shift keys to get the "capitalize on
-		shift" feature working. If we don't do that, we will get incorrect
-		character instead of the desired (capitalized) one. It happens because
-		with the Shift key pressed the keycode gets altered.
-	*/
-	KeyCode shift_l = XKeysymToKeycode(disp, XK_Shift_L);
-	KeyCode shift_r = XKeysymToKeycode(disp, XK_Shift_R);
-	XTestFakeKeyEvent(disp, shift_l, False, CurrentTime);
-	XTestFakeKeyEvent(disp, shift_r, False, CurrentTime);
-
 	gunichar utf8_char = g_utf8_get_char(utf8_str);
 	KeySym char_ks = utf8_to_keysym(utf8_char);
 
