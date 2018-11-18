@@ -1,6 +1,8 @@
 # About
 Any character you like without having to memorize and perform Compose sequences
 
+![](https://user-images.githubusercontent.com/6134003/48676314-ca7af180-eb86-11e8-93e8-8ae7ff537f87.gif)
+
 # Dependencies
 1. `meson`
 1. `gtk3`
