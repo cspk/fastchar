@@ -1,4 +1,4 @@
-project('fastchar', 'c', version: '1.0', license: 'MIT',
+project('fastchar', 'c', version: '1.1', license: 'MIT',
         default_options: ['c_std=c11'])
 
 src = ['src/main.c', 'src/cfg.c', 'src/ui.c', 'src/x11.c']
