@@ -5,12 +5,9 @@
 #include "dbg.h"
 
 char* cfg_get_path(void) {
-	const char *user_home = getenv("HOME");
-	if (!user_home) {
-		DBG("Could not get user HOME!\n");
-		return NULL;
-	}
-	return g_strjoin("/", user_home, CFG_FILENAME, NULL);
+	const gchar *cfg_dir = g_get_user_config_dir();
+
+	return g_strjoin("/", cfg_dir, CFG_DIRNAME "/" CFG_FILENAME, NULL);
 }
 
 char* cfg_load(const char *filename) {

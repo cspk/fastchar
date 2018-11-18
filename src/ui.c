@@ -9,6 +9,7 @@ static const char *selected_char = NULL;
 static void menu_on_hide(GtkApplication *app);
 static void menu_on_activate(GtkWidget *menu);
 static gboolean menu_key_event(GtkWidget *menu, GdkEvent *event, gpointer data);
+static gboolean menu_button_event(GtkWidget *menu, GdkEvent *event, gpointer data);
 
 static void menuitem_capitalize_label(GtkWidget *item, gpointer data);
 
@@ -32,9 +33,12 @@ void ui_init(const char *cfg) {
 	g_signal_connect_swapped(menu, "hide", G_CALLBACK(menu_on_hide), app);
 	g_signal_connect(menu, "activate-current", G_CALLBACK(menu_on_activate), NULL);
 
-	gtk_widget_set_events(menu, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
+	gint events = GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK |
+	              GDK_BUTTON_RELEASE_MASK;
+	gtk_widget_set_events(menu, events);
 	g_signal_connect(menu, "key-press-event", G_CALLBACK(menu_key_event), NULL);
 	g_signal_connect(menu, "key-release-event", G_CALLBACK(menu_key_event), NULL);
+	g_signal_connect(menu, "button-release-event", G_CALLBACK(menu_button_event), NULL);
 
 	gtk_widget_show_all(GTK_WIDGET(menu));
 	gtk_menu_popup_at_widget(GTK_MENU(menu), window, 0, 0, NULL);
@@ -70,8 +74,7 @@ static gboolean menu_key_event(GtkWidget *menu, GdkEvent *event, gpointer data) 
 		break;
 
 	case GDK_KEY_Return:
-		if ((key_event->type == GDK_KEY_PRESS) &&
-		    (key_event->state & GDK_SHIFT_MASK)) {
+		if (key_event->type == GDK_KEY_PRESS) {
 			g_signal_emit_by_name(menu, "activate-current");
 
 			return TRUE;
@@ -80,8 +83,7 @@ static gboolean menu_key_event(GtkWidget *menu, GdkEvent *event, gpointer data) 
 
 	case GDK_KEY_Up:
 	case GDK_KEY_Down:
-		if ((key_event->type == GDK_KEY_PRESS) &&
-		    (key_event->state & GDK_SHIFT_MASK)) {
+		if (key_event->type == GDK_KEY_PRESS) {
 			GtkMenuDirectionType dir = (key_event->keyval == GDK_KEY_Up) ?
 				GTK_MENU_DIR_PREV : GTK_MENU_DIR_NEXT;
 			g_signal_emit_by_name(menu, "move-current", dir);
@@ -92,6 +94,21 @@ static gboolean menu_key_event(GtkWidget *menu, GdkEvent *event, gpointer data) 
 	}
 
 	return FALSE;
+}
+
+static gboolean menu_button_event(GtkWidget *menu, GdkEvent *event, gpointer data) {
+	(void)data;
+
+	const guint button_left = 1;
+
+	GdkEventButton *button_event = (GdkEventButton*)event;
+	if (button_event->button == button_left) {
+		g_signal_emit_by_name(menu, "activate-current");
+
+		return TRUE;
+	}
+
+	return TRUE;
 }
 
 static void menuitem_capitalize_label(GtkWidget *item, gpointer data) {
